@@ -1,0 +1,866 @@
+<!DOCTYPE HTML>
+<!--
+	Hielo by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+--><html><head><title>Hielo by Mariam</title><meta charset="utf-8"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="assets/css/main.css"></head><body>
+<!-- Dark Mode Toggle -->
+<!-- Dark Mode & Main Color Picker (moved to end of website) -->
+<div style="position: fixed; bottom: 1.2em; right: 1.2em; z-index: 99999; display: flex; align-items: center; gap: 0.7em;">
+	<label for="dark-mode-toggle" style="color: #7c4dff; font-weight: 600; font-size: 1em; cursor: pointer;">🌙 Dark Mode</label>
+	<input type="checkbox" id="dark-mode-toggle" style="width: 1.5em; height: 1.5em; accent-color: #7c4dff; cursor: pointer;">
+	<label for="main-color-picker" style="color: #7c4dff; font-weight: 600; font-size: 1em; cursor: pointer;">🎨 Color</label>
+	<input type="color" id="main-color-picker" value="#7c4dff" style="width: 2em; height: 2em; border: none; border-radius: 50%; box-shadow: 0 1px 8px #b388ff55; cursor: pointer;">
+</div>
+<script>
+(function() {
+	// Default colors
+	const defaultMain = "#7c4dff";
+	const defaultAccent = "#6ec6ff";
+	// Set CSS variables
+	function setColors(main, accent) {
+		document.documentElement.style.setProperty('--main-color', main);
+		document.documentElement.style.setProperty('--accent-color', accent);
+		document.documentElement.style.setProperty('--main-color-dark', shadeColor(main, -20));
+		document.documentElement.style.setProperty('--main-color-light', shadeColor(main, 40));
+	}
+	// Simple color shade function
+	function shadeColor(color, percent) {
+		let R = parseInt(color.substring(1,3),16);
+		let G = parseInt(color.substring(3,5),16);
+		let B = parseInt(color.substring(5,7),16);
+		R = Math.min(255,Math.max(0,parseInt(R * (100 + percent) / 100)));
+		G = Math.min(255,Math.max(0,parseInt(G * (100 + percent) / 100)));
+		B = Math.min(255,Math.max(0,parseInt(B * (100 + percent) / 100)));
+		return "#" + (R.toString(16).padStart(2,"0")) + (G.toString(16).padStart(2,"0")) + (B.toString(16).padStart(2,"0"));
+	}
+	// Dark mode toggle
+	const darkToggle = document.getElementById('dark-mode-toggle');
+	darkToggle.addEventListener('change', function() {
+		if (this.checked) {
+			document.body.classList.add('dark-mode');
+			localStorage.setItem('dark-mode', 'on');
+		} else {
+			document.body.classList.remove('dark-mode');
+			localStorage.setItem('dark-mode', 'off');
+		}
+	});
+	// Main color picker
+	const colorPicker = document.getElementById('main-color-picker');
+	colorPicker.addEventListener('input', function() {
+		setColors(this.value, defaultAccent);
+		localStorage.setItem('main-color', this.value);
+	});
+	// On load: restore settings
+	if (localStorage.getItem('dark-mode') === 'on') {
+		darkToggle.checked = true;
+		document.body.classList.add('dark-mode');
+	}
+	const savedColor = localStorage.getItem('main-color');
+	if (savedColor) {
+		colorPicker.value = savedColor;
+		setColors(savedColor, defaultAccent);
+	} else {
+		setColors(defaultMain, defaultAccent);
+	}
+})();
+</script>
+<style>
+:root {
+	--main-color: #7c4dff;
+	--accent-color: #6ec6ff;
+	--main-color-dark: #5a2bbf;
+	--main-color-light: #b388ff;
+	--bg-light: #fff;
+	--bg-dark: #18122b;
+	--text-light: #222;
+	--text-dark: #f3e5f5;
+}
+body.dark-mode {
+	background: var(--bg-dark) !important;
+	color: var(--text-dark) !important;
+}
+body.dark-mode,
+body.dark-mode .wrapper,
+body.dark-mode .inner,
+body.dark-mode section,
+body.dark-mode header,
+body.dark-mode .box,
+body.dark-mode .gallery,
+body.dark-mode .creative-gallery,
+body.dark-mode .creative-item,
+body.dark-mode .creative-img-container,
+body.dark-mode .creative-modal,
+body.dark-mode .creative-modal-content,
+body.dark-mode .creative-overlay,
+body.dark-mode .creative-text,
+body.dark-mode .copyright,
+body.dark-mode .button,
+body.dark-mode .button.alt,
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode label,
+body.dark-mode nav,
+body.dark-mode #menu,
+body.dark-mode #header,
+body.dark-mode #footer,
+body.dark-mode .logo,
+body.dark-mode .align-center,
+body.dark-mode .special {
+	background-color: transparent !important;
+	color: var(--text-dark) !important;
+}
+body.dark-mode .box,
+body.dark-mode .creative-img-container,
+body.dark-mode .creative-modal-content,
+body.dark-mode .creative-overlay,
+body.dark-mode .creative-gallery,
+body.dark-mode .creative-item {
+	background: #221a36 !important;
+	box-shadow: 0 4px 24px #0004 !important;
+}
+body.dark-mode .creative-overlay {
+	background: linear-gradient(135deg, var(--main-color)88 0%, var(--accent-color)88 100%) !important;
+}
+body.dark-mode .creative-modal {
+	background: rgba(24, 18, 43, 0.95) !important;
+}
+body.dark-mode .button,
+body.dark-mode .button.alt {
+	background: linear-gradient(90deg, var(--main-color) 0%, var(--accent-color) 100%) !important;
+	color: #fff !important;
+	border: none !important;
+}
+body.dark-mode .button.alt:hover,
+body.dark-mode #download-canvas:hover {
+	background: linear-gradient(90deg, var(--accent-color) 0%, var(--main-color) 100%) !important;
+	color: #fff !important;
+}
+body.dark-mode #clear-canvas:hover {
+	background: #f44336 !important;
+	color: #fff !important;
+	border-color: #f44336 !important;
+}
+body.dark-mode #eraser-toggle,
+body.dark-mode #eraser-toggle:hover,
+body.dark-mode #eraser-toggle:focus {
+	background: var(--main-color-light) !important;
+	color: #f44336 !important;
+	border-color: #f44336 !important;
+}
+body.dark-mode input[type="color"] {
+	box-shadow: 0 2px 12px var(--main-color);
+}
+body.dark-mode select:focus {
+	border-color: var(--main-color);
+	box-shadow: 0 0 0 2px var(--main-color-light);
+}
+body.dark-mode .logo a,
+body.dark-mode .logo span {
+	color: var(--main-color) !important;
+}
+body.dark-mode .copyright a {
+	color: var(--accent-color) !important;
+}
+body.dark-mode .creative-text h3,
+body.dark-mode .creative-text p {
+	color: #fff !important;
+}
+body.dark-mode .creative-close {
+	color: #fff !important;
+}
+body.dark-mode .creative-close:hover {
+	color: #f44336 !important;
+}
+body.dark-mode .gallery .creative-img {
+	filter: brightness(0.85);
+}
+body.dark-mode #leonardo-canvas {
+	background: repeating-linear-gradient(135deg, #221a36 0 20px, #2d2342 20px 40px) !important;
+	border-color: var(--main-color) !important;
+}
+body.dark-mode #canvas-container {
+	background: linear-gradient(135deg, #2d2342 0%, #18122b 100%) !important;
+	box-shadow: 0 4px 24px #0004 !important;
+}
+body.dark-mode #canvas-container label,
+body.dark-mode #canvas-container span,
+body.dark-mode #canvas-container select,
+body.dark-mode #canvas-container input,
+body.dark-mode #canvas-container button {
+	color: var(--main-color) !important;
+}
+body.dark-mode #bg-color-picker,
+body.dark-mode #main-color-picker {
+	background: #18122b !important;
+}
+body.dark-mode #menu,
+body.dark-mode nav {
+	background: #18122b !important;
+}
+body.dark-mode .special {
+	color: var(--main-color-light) !important;
+}
+body.dark-mode .align-center h2,
+body.dark-mode h2,
+body.dark-mode h3 {
+	color: var(--main-color-light) !important;
+}
+body.dark-mode .banner .inner header h2 {
+	color: var(--main-color) !important;
+	text-shadow: 0 2px 8px #0008 !important;
+}
+body.dark-mode .banner .inner header p {
+	color: var(--main-color-light) !important;
+}
+body.dark-mode .creative-modal-content {
+	box-shadow: 0 8px 48px var(--main-color)77 !important;
+}
+body.dark-mode .creative-overlay {
+	color: #fff !important;
+}
+body.dark-mode .creative-gallery {
+	background: transparent !important;
+}
+body.dark-mode .creative-item {
+	background: #221a36 !important;
+}
+body.dark-mode .creative-img {
+	background: #18122b !important;
+}
+body.dark-mode .creative-modal {
+	background: rgba(24, 18, 43, 0.95) !important;
+}
+body.dark-mode .creative-modal-content {
+	background: #221a36 !important;
+}
+body.dark-mode .creative-text {
+	color: #fff !important;
+}
+body.dark-mode .creative-close {
+	color: #fff !important;
+}
+body.dark-mode .creative-close:hover {
+	color: #f44336 !important;
+}
+body.dark-mode .copyright {
+	background: #18122b !important;
+	color: var(--main-color-light) !important;
+}
+body.dark-mode .copyright a {
+	color: var(--accent-color) !important;
+}
+body.dark-mode .icons a {
+	color: var(--main-color-light) !important;
+}
+body.dark-mode .icons a:hover {
+	color: var(--accent-color) !important;
+}
+</style>
+		<!-- Header -->
+			<header id="header" class="alt"><div class="logo"><a href="index.html">Hielo <span>by Mariam</span></a></div>
+				<a href="#menu">Menu</a>
+			</header><!-- Nav --><nav id="menu"><ul class="links"><li><a href="index.html">Home</a></li>
+					<li><a href="generic.html">Generic</a></li>
+					<li><a href="elements.html">Elements</a></li>
+				</ul></nav><!-- Banner --><section class="banner full"><article><img src="images/slide01.jpg" alt="" width="1440" height="961"><div class="inner">
+						<header><p>A free responsive web site template by <a href="https://templated.co">Mariam</a></p>
+							<h2>Hielo</h2>
+						</header></div>
+				</article><article><img src="images/slide02.jpg" alt="" width="1440" height="961"><div class="inner">
+						<header><p>Discover the beauty of art and the freedom of drawing</p>
+							<h2>Inspiration</h2>
+						</header></div>
+				</article><article><img src="images/slide03.jpg" alt="" width="1440" height="962"><div class="inner">
+						<header><p>Every stroke tells a story, every color sparks emotion</p>
+							<h2>Expression</h2>
+						</header></div>
+				</article><article><img src="images/slide04.jpg" alt="" width="1440" height="961"><div class="inner">
+						<header><p>Art connects hearts and minds through creativity</p>
+							<h2>Connection</h2>
+						</header></div>
+				</article><article><img src="images/slide05.jpg" alt="" width="1440" height="962"><div class="inner">
+						<header><p>Draw your dreams, paint your passion</p>
+							<h2>Imagination</h2>
+						</header></div>
+				</article></section><!-- One --><section id="one" class="wrapper style2"><div class="inner">
+					<div class="grid-style">
+
+						<div>
+							<div class="box">
+								<div class="image fit">
+									<img src="images/art1.jpg" alt="" width="600" height="300"></div>
+								<div class="content">
+									<header class="align-center"><p>Celebrate love through art</p>
+										<h2>Drawing Two Lovers</h2>
+									</header>
+									<p>Experience the beauty of connection by drawing two people in love. Capture their emotions, the gentle touch, and the story that unfolds between them. Let your creativity express the warmth and intimacy of a couple's bond through your unique artistic style.</p>
+									<footer class="align-center"><a href="#" class="button alt">Learn More</a>
+									</footer></div>
+							</div>
+						</div>
+
+						<div>
+							<div class="box">
+								<div class="image fit">
+									<img src="images/art2.jpg" alt="" width="600" height="300"></div>
+								<div class="content">
+									<header class="align-center"><p>Nature's beauty in every leaf</p>
+										<h2>Garden and Trees</h2>
+									</header>
+									<p>Explore the tranquility of a lush garden filled with vibrant trees. Capture the gentle sway of branches, the play of sunlight through leaves, and the peaceful harmony that nature brings. Let your art reflect the serenity and life found in every corner of a flourishing garden.</p>
+									<footer class="align-center"><a href="#" class="button alt">Learn More</a>
+									</footer>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</section><!-- Two --><section id="two" class="wrapper style3"><div class="inner">
+					<header class="align-center"><p>Art is not just seen with the eyes, but felt deeply within the soul and breathed by the heart</p>
+						<h2>Where emotion meets canvas</h2>
+					</header></div>
+	
+				</section>
+				
+				<!-- Three -->
+				 
+				<section id="three" class="wrapper style2">	
+					<div class="inner" style="margin-bottom: 2em;">
+						<header class="align-center">
+							<h2 style="font-family: 'Brush Script MT', cursive; font-size: 2.5em; color: #7c4dff; letter-spacing: 2px; text-shadow: 0 2px 8px #b388ff44;">Draw Like Leonardo</h2>
+							<p style="font-size: 1.15em; color: #444; margin-bottom: 0.7em;">Unleash your creativity! Sketch your masterpiece below.</p>
+						</header>
+						<div style="display: flex; justify-content: center; align-items: flex-start; gap: 2em; flex-wrap: wrap;">
+							<div id="canvas-container" style="background: linear-gradient(135deg, #e3f2fd 0%, #ede7f6 100%); border-radius: 18px; box-shadow: 0 4px 24px #b388ff33; padding: 1.5em 2em; display: flex; flex-direction: column; align-items: center;">
+								<canvas id="leonardo-canvas" width="600" height="400" style="border:4px dashed #7c4dff; background: repeating-linear-gradient(135deg, #fff 0 20px, #f3e5f5 20px 40px); border-radius: 16px; box-shadow: 0 4px 24px #b388ff33; cursor: crosshair;"></canvas>
+								<div style="margin-top: 1.2em; display: flex; gap: 1.5em; align-items: center;">
+									<div style="display: flex; flex-direction: column; align-items: center;">
+										<label for="color-picker" style="font-weight: 600; color: #7c4dff; margin-bottom: 0.3em; letter-spacing: 1px;">Color</label>
+										<input type="color" id="color-picker" value="#222222" style="width: 2.5em; height: 2.5em; border: none; border-radius: 50%; box-shadow: 0 1px 8px #b388ff55;">
+									</div>
+									<div style="display: flex; flex-direction: column; align-items: center;">
+										<label for="brush-size" style="font-weight: 600; color: #7c4dff; margin-bottom: 0.3em; letter-spacing: 1px;">Brush</label>
+										<input type="range" id="brush-size" min="1" max="24" value="3" style="width: 90px;">
+										<span id="brush-size-value" style="font-size: 0.95em; color: #7c4dff;">3px</span>
+									</div>
+									<div style="display: flex; flex-direction: column; align-items: center;">
+										<label for="brush-shape" style="font-weight: 600; color: #7c4dff; margin-bottom: 0.3em; letter-spacing: 1px;">Shape</label>
+										<select id="brush-shape" style="padding: 0.2em 0.7em; border-radius: 6px; border: 1px solid #b388ff; color: #7c4dff; background: #f3e5f5;">
+											<option value="round">Round</option>
+											<option value="square">Square</option>
+										</select>
+									</div>
+									<div style="display: flex; flex-direction: column; align-items: center;">
+										<label for="eraser-toggle" style="font-weight: 600; color: #7c4dff; margin-bottom: 0.3em; letter-spacing: 1px;">Rubber</label>
+										<button id="eraser-toggle" class="button alt" style="background: #fff; color: #7c4dff; border: 2px solid #b388ff; border-radius: 8px; padding: 0.5em 1.2em; font-weight: 600; transition: background 0.2s;">Off</button>
+									</div>
+									<button id="clear-canvas" class="button alt" style="background: #fff; color: #7c4dff; border: 2px solid #b388ff; border-radius: 8px; padding: 0.5em 1.2em; font-weight: 600; transition: background 0.2s;">Clear</button>
+									<button id="download-canvas" class="button alt" style="background: linear-gradient(90deg, #7c4dff 0%, #6ec6ff 100%); color: #fff; border: none; border-radius: 8px; padding: 0.5em 1.2em; font-weight: 600; box-shadow: 0 1px 4px #b388ff55; transition: background 0.2s;">Download</button>
+									<div style="display: flex; flex-direction: column; align-items: center;">
+										<label for="bg-color-picker" style="font-weight: 600; color: #7c4dff; margin-bottom: 0.3em; letter-spacing: 1px;">BG Color</label>
+										<input type="color" id="bg-color-picker" value="#ffffff" style="width: 2.5em; height: 2.5em; border: none; border-radius: 50%; box-shadow: 0 1px 8px #b388ff55;">
+									</div>
+									<div style="display: flex; flex-direction: column; align-items: center;">
+										<label for="bg-image-select" style="font-weight: 600; color: #7c4dff; margin-bottom: 0.3em; letter-spacing: 1px;">BG Image</label>
+										<select id="bg-image-select" style="padding: 0.2em 0.7em; border-radius: 6px; border: 1px solid #b388ff; color: #7c4dff; background: #f3e5f5;">
+											<option value="none">None</option>
+											<option value="grid">Grid</option>
+											<option value="dots">Dots</option>
+											<option value="lines">Lines</option>
+										</select>
+									</div>
+								</div>
+								<div style="font-size: 1em; color: #7c4dff; margin-top: 1em; font-style: italic;">
+									Tip: Try different brush shapes, sizes, and colors for unique effects! Use the rubber to erase.
+								</div>
+							</div>
+							<div style="min-width: 220px; max-width: 260px; background: linear-gradient(135deg, #ede7f6 0%, #e3f2fd 100%); border-radius: 16px; box-shadow: 0 4px 24px #b388ff22; padding: 1.2em 1.5em; display: flex; flex-direction: column; align-items: center;">
+								<div style="font-size: 1.1em; color: #7c4dff; font-weight: 600; margin-bottom: 0.7em; text-align: center;">
+									🎨 Inspiration
+								</div>
+								<ul style="color: #555; font-size: 0.98em; padding-left: 1.1em; margin-bottom: 0.7em;">
+									<li>Draw a self-portrait</li>
+									<li>Sketch your favorite animal</li>
+									<li>Try abstract shapes &amp; patterns</li>
+									<li>Write your name in a creative way</li>
+								</ul>
+								<div style="font-size: 0.95em; color: #888; text-align: center;">
+									Share your art with friends!
+								</div>
+							</div>
+						</div>
+						<script>
+							const canvas = document.getElementById('leonardo-canvas');
+							const ctx = canvas.getContext('2d');
+							let drawing = false;
+							let currentColor = document.getElementById('color-picker').value;
+							let brushSize = document.getElementById('brush-size').value;
+							let brushShape = document.getElementById('brush-shape').value;
+							let eraserMode = false;
+							const eraserBtn = document.getElementById('eraser-toggle');
+
+							// BG controls
+							const bgColorPicker = document.getElementById('bg-color-picker');
+							const bgImageSelect = document.getElementById('bg-image-select');
+
+							function drawBG() {
+								// Fill background color
+								ctx.save();
+								ctx.setTransform(1,0,0,1,0,0);
+								ctx.globalCompositeOperation = 'source-over';
+								ctx.clearRect(0, 0, canvas.width, canvas.height);
+								ctx.fillStyle = bgColorPicker.value;
+								ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+								// Draw pattern if selected
+								const pattern = bgImageSelect.value;
+								if (pattern === 'grid') {
+									ctx.strokeStyle = '#e0e0e0';
+									ctx.lineWidth = 1;
+									for (let x = 0; x < canvas.width; x += 25) {
+										ctx.beginPath();
+										ctx.moveTo(x, 0);
+										ctx.lineTo(x, canvas.height);
+										ctx.stroke();
+									}
+									for (let y = 0; y < canvas.height; y += 25) {
+										ctx.beginPath();
+										ctx.moveTo(0, y);
+										ctx.lineTo(canvas.width, y);
+										ctx.stroke();
+									}
+								} else if (pattern === 'dots') {
+									ctx.fillStyle = '#b388ff33';
+									for (let x = 10; x < canvas.width; x += 30) {
+										for (let y = 10; y < canvas.height; y += 30) {
+											ctx.beginPath();
+											ctx.arc(x, y, 2.5, 0, 2 * Math.PI);
+											ctx.fill();
+										}
+									}
+								} else if (pattern === 'lines') {
+									ctx.strokeStyle = '#b388ff33';
+									ctx.lineWidth = 2;
+									for (let y = 0; y < canvas.height; y += 30) {
+										ctx.beginPath();
+										ctx.moveTo(0, y);
+										ctx.lineTo(canvas.width, y);
+										ctx.stroke();
+									}
+								}
+								ctx.restore();
+							}
+
+							// Save drawing on top of BG
+							let drawingLayer = null;
+							function saveDrawingLayer() {
+								drawingLayer = ctx.getImageData(0, 0, canvas.width, canvas.height);
+							}
+							function restoreDrawingLayer() {
+								if (drawingLayer) ctx.putImageData(drawingLayer, 0, 0);
+							}
+
+							// Redraw BG and drawing
+							function redrawAll() {
+								drawBG();
+								if (drawingLayer) ctx.putImageData(drawingLayer, 0, 0);
+							}
+
+							// Initial BG
+							drawBG();
+
+							document.getElementById('color-picker').addEventListener('input', function(e) {
+								currentColor = e.target.value;
+								if (!eraserMode) ctx.globalCompositeOperation = 'source-over';
+							});
+
+							const brushSizeInput = document.getElementById('brush-size');
+							const brushSizeValue = document.getElementById('brush-size-value');
+							brushSizeInput.addEventListener('input', function(e) {
+								brushSize = e.target.value;
+								brushSizeValue.textContent = brushSize + 'px';
+							});
+
+							document.getElementById('brush-shape').addEventListener('change', function(e) {
+								brushShape = e.target.value;
+							});
+
+							eraserBtn.addEventListener('click', function() {
+								eraserMode = !eraserMode;
+								if (eraserMode) {
+									eraserBtn.textContent = 'On';
+									eraserBtn.style.background = '#f3e5f5';
+									eraserBtn.style.color = '#f44336';
+									ctx.globalCompositeOperation = 'destination-out';
+								} else {
+									eraserBtn.textContent = 'Off';
+									eraserBtn.style.background = '#fff';
+									eraserBtn.style.color = '#7c4dff';
+									ctx.globalCompositeOperation = 'source-over';
+								}
+							});
+
+							function getPos(e) {
+								if (e.touches) {
+									const rect = canvas.getBoundingClientRect();
+									return {
+										x: e.touches[0].clientX - rect.left,
+										y: e.touches[0].clientY - rect.top
+									};
+								} else {
+									return {
+										x: e.offsetX,
+										y: e.offsetY
+									};
+								}
+							}
+
+							function startDraw(e) {
+								drawing = true;
+								const pos = getPos(e);
+								ctx.beginPath();
+								ctx.moveTo(pos.x, pos.y);
+								e.preventDefault();
+							}
+
+							function draw(e) {
+								if (!drawing) return;
+								const pos = getPos(e);
+								ctx.lineTo(pos.x, pos.y);
+								ctx.strokeStyle = eraserMode ? 'rgba(0,0,0,1)' : currentColor;
+								ctx.lineWidth = brushSize;
+								ctx.lineCap = brushShape;
+								ctx.lineJoin = brushShape;
+								ctx.stroke();
+								e.preventDefault();
+								saveDrawingLayer();
+							}
+
+							function endDraw(e) {
+								drawing = false;
+								ctx.closePath();
+								e.preventDefault();
+								saveDrawingLayer();
+							}
+
+							canvas.addEventListener('mousedown', startDraw);
+							canvas.addEventListener('mousemove', draw);
+							canvas.addEventListener('mouseup', endDraw);
+							canvas.addEventListener('mouseleave', endDraw);
+
+							canvas.addEventListener('touchstart', startDraw, {passive: false});
+							canvas.addEventListener('touchmove', draw, {passive: false});
+							canvas.addEventListener('touchend', endDraw, {passive: false});
+							canvas.addEventListener('touchcancel', endDraw, {passive: false});
+
+							document.getElementById('clear-canvas').onclick = () => {
+								drawBG();
+								drawingLayer = null;
+							};
+
+							document.getElementById('download-canvas').onclick = () => {
+								// Merge BG and drawing for download
+								const tempCanvas = document.createElement('canvas');
+								tempCanvas.width = canvas.width;
+								tempCanvas.height = canvas.height;
+								const tempCtx = tempCanvas.getContext('2d');
+								// Draw BG
+								tempCtx.fillStyle = bgColorPicker.value;
+								tempCtx.fillRect(0, 0, canvas.width, canvas.height);
+								// Draw pattern
+								const pattern = bgImageSelect.value;
+								if (pattern === 'grid') {
+									tempCtx.strokeStyle = '#e0e0e0';
+									tempCtx.lineWidth = 1;
+									for (let x = 0; x < canvas.width; x += 25) {
+										tempCtx.beginPath();
+										tempCtx.moveTo(x, 0);
+										tempCtx.lineTo(x, canvas.height);
+										tempCtx.stroke();
+									}
+									for (let y = 0; y < canvas.height; y += 25) {
+										tempCtx.beginPath();
+										tempCtx.moveTo(0, y);
+										tempCtx.lineTo(canvas.width, y);
+										tempCtx.stroke();
+									}
+								} else if (pattern === 'dots') {
+									tempCtx.fillStyle = '#b388ff33';
+									for (let x = 10; x < canvas.width; x += 30) {
+										for (let y = 10; y < canvas.height; y += 30) {
+											tempCtx.beginPath();
+											tempCtx.arc(x, y, 2.5, 0, 2 * Math.PI);
+											tempCtx.fill();
+										}
+									}
+								} else if (pattern === 'lines') {
+									tempCtx.strokeStyle = '#b388ff33';
+									tempCtx.lineWidth = 2;
+									for (let y = 0; y < canvas.height; y += 30) {
+										tempCtx.beginPath();
+										tempCtx.moveTo(0, y);
+										tempCtx.lineTo(canvas.width, y);
+										tempCtx.stroke();
+									}
+								}
+								// Draw drawing
+								if (drawingLayer) tempCtx.putImageData(drawingLayer, 0, 0);
+								const link = document.createElement('a');
+								link.download = 'leonardo-sketch.png';
+								link.href = tempCanvas.toDataURL('image/png');
+								link.click();
+							};
+
+							bgColorPicker.addEventListener('input', function() {
+								redrawAll();
+							});
+							bgImageSelect.addEventListener('change', function() {
+								redrawAll();
+							});
+
+							// On page load, save initial empty drawing layer
+							saveDrawingLayer();
+						</script>
+						<style>
+							#leonardo-canvas:active, #leonardo-canvas:focus {
+								outline: 3px solid #7c4dff;
+							}
+							#leonardo-canvas {
+								transition: box-shadow 0.2s;
+								box-shadow: 0 4px 24px #b388ff33;
+							}
+							.button.alt:hover, #download-canvas:hover {
+								background: linear-gradient(90deg, #6ec6ff 0%, #7c4dff 100%) !important;
+								color: #fff !important;
+							}
+							#clear-canvas:hover {
+								background: #f44336 !important;
+								color: #fff !important;
+								border-color: #f44336 !important;
+							}
+							#eraser-toggle:hover, #eraser-toggle:focus {
+								background: #f3e5f5 !important;
+								color: #f44336 !important;
+								border-color: #f44336 !important;
+							}
+							input[type="color"]:hover {
+								box-shadow: 0 2px 12px #7c4dff;
+							}
+							select#brush-shape:focus, select#bg-image-select:focus {
+								border-color: #7c4dff;
+								box-shadow: 0 0 0 2px #b388ff44;
+							}
+						</style>
+					<div class="inner">
+					<header class="align-center"><p class="special">Nam vel ante sit amet libero scelerisque facilisis eleifend vitae urna</p>
+						<h2>Art is more than shapes and shades — it’s a silent message spoken through beauty</h2>
+					</header>
+					<div class="gallery creative-gallery">
+						<div class="creative-item">
+							<div class="creative-img-container" data-title="My Love Drawing Me" data-desc="A heartfelt sketch capturing the moment of love.">
+								<img src="images/art3.jpg" alt="My Love Drawing Me" width="600" height="300" class="creative-img">
+								<div class="creative-overlay">
+									<div class="creative-text">
+										<h3>My Love Drawing Me</h3>
+										<p>A heartfelt sketch capturing the moment of love.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="creative-item">
+							<div class="creative-img-container" data-title="Abstract Colors" data-desc="A vibrant play of colors and shapes.">
+								<img src="images/art6.jpg" alt="Abstract Colors" width="600" height="300" class="creative-img">
+								<div class="creative-overlay">
+									<div class="creative-text">
+										<h3>Abstract Colors</h3>
+										<p>A vibrant play of colors and shapes.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="creative-item">
+							<div class="creative-img-container" data-title="Dreamy Landscape" data-desc="A dreamy landscape full of imagination.">
+								<img src="images/art5.jpg" alt="Dreamy Landscape" width="600" height="300" class="creative-img">
+								<div class="creative-overlay">
+									<div class="creative-text">
+										<h3>Dreamy Landscape</h3>
+										<p>A dreamy landscape full of imagination.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="creative-item">
+							<div class="creative-img-container" data-title="Creative Portrait" data-desc="A creative portrait with unique style.">
+								<img src="images/art4.jpg" alt="Creative Portrait" width="600" height="300" class="creative-img">
+								<div class="creative-overlay">
+									<div class="creative-text">
+										<h3>Creative Portrait</h3>
+										<p>A creative portrait with unique style.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Creative Gallery Modal -->
+					<div id="creative-modal" class="creative-modal">
+						<span class="creative-close">&times;</span>
+						<img class="creative-modal-content" id="creative-modal-img">
+						<div id="creative-modal-caption"></div>
+					</div>
+
+					<style>
+					.creative-gallery {
+						display: flex;
+						flex-wrap: wrap;
+						gap: 2em;
+						justify-content: center;
+					}
+					.creative-item {
+						position: relative;
+						width: 260px;
+						transition: transform 0.3s;
+					}
+					.creative-item:hover {
+						transform: translateY(-8px) scale(1.04) rotate(-2deg);
+						z-index: 2;
+					}
+					.creative-img-container {
+						position: relative;
+						cursor: pointer;
+						overflow: hidden;
+						border-radius: 18px;
+						box-shadow: 0 4px 24px #b388ff33;
+					}
+					.creative-img {
+						width: 100%;
+						height: 180px;
+						object-fit: cover;
+						border-radius: 18px;
+						transition: transform 0.4s cubic-bezier(.4,2,.6,.8);
+					}
+					.creative-img-container:hover .creative-img {
+						transform: scale(1.08) rotate(1deg);
+						filter: brightness(0.92) blur(1px);
+					}
+					.creative-overlay {
+						position: absolute;
+						top: 0; left: 0; right: 0; bottom: 0;
+						background: linear-gradient(135deg, #7c4dff88 0%, #6ec6ff88 100%);
+						opacity: 0;
+						transition: opacity 0.3s;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						border-radius: 18px;
+					}
+					.creative-img-container:hover .creative-overlay {
+						opacity: 1;
+					}
+					.creative-text {
+						color: #fff;
+						text-align: center;
+						padding: 1em;
+					}
+					.creative-text h3 {
+						margin: 0 0 0.3em 0;
+						font-size: 1.2em;
+						letter-spacing: 1px;
+					}
+					.creative-text p {
+						margin: 0;
+						font-size: 1em;
+						opacity: 0.85;
+					}
+
+					/* Modal Styles */
+					.creative-modal {
+						display: none;
+						position: fixed;
+						z-index: 9999;
+						left: 0; top: 0; width: 100vw; height: 100vh;
+						background: rgba(44, 19, 80, 0.85);
+						justify-content: center;
+						align-items: center;
+						animation: fadeIn 0.4s;
+					}
+					@keyframes fadeIn {
+						from { opacity: 0; }
+						to { opacity: 1; }
+					}
+					.creative-modal-content {
+						margin: auto;
+						display: block;
+						max-width: 80vw;
+						max-height: 70vh;
+						border-radius: 18px;
+						box-shadow: 0 8px 48px #7c4dff77;
+						animation: modalZoom 0.5s;
+					}
+					@keyframes modalZoom {
+						from { transform: scale(0.7); opacity: 0; }
+						to { transform: scale(1); opacity: 1; }
+					}
+					#creative-modal-caption {
+						margin: 1.2em auto 0 auto;
+						text-align: center;
+						color: #fff;
+						font-size: 1.2em;
+						max-width: 80vw;
+					}
+					.creative-close {
+						position: absolute;
+						top: 2.5em;
+						right: 3em;
+						color: #fff;
+						font-size: 2.5em;
+						font-weight: bold;
+						cursor: pointer;
+						transition: color 0.2s;
+						z-index: 10001;
+					}
+					.creative-close:hover {
+						color: #f44336;
+					}
+					@media (max-width: 700px) {
+						.creative-item { width: 98vw; }
+						.creative-modal-content { max-width: 98vw; max-height: 60vh; }
+					}
+					</style>
+					<script>
+					document.querySelectorAll('.creative-img-container').forEach(function(container) {
+						container.addEventListener('click', function() {
+							const modal = document.getElementById('creative-modal');
+							const modalImg = document.getElementById('creative-modal-img');
+							const caption = document.getElementById('creative-modal-caption');
+							modal.style.display = "flex";
+							modalImg.src = this.querySelector('img').src;
+							modalImg.alt = this.dataset.title;
+							caption.innerHTML = "<strong>" + this.dataset.title + "</strong><br>" + this.dataset.desc;
+						});
+					});
+					document.querySelector('.creative-close').onclick = function() {
+						document.getElementById('creative-modal').style.display = "none";
+					};
+					window.onclick = function(event) {
+						const modal = document.getElementById('creative-modal');
+						if (event.target === modal) {
+							modal.style.display = "none";
+						}
+					};
+					</script>
+				</div>
+			</section><!-- Footer --><footer id="footer"><div class="container">
+					<ul class="icons"><li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+					</ul></div>
+			</footer><div class="copyright">
+			Made with <a href="https://templated.co/">Ziad Alsagier</a>.
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script><script src="assets/js/jquery.scrollex.min.js"></script><script src="assets/js/skel.min.js"></script><script src="assets/js/util.js"></script><script src="assets/js/main.js"></script></body></html>
