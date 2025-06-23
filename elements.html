@@ -1,309 +1,602 @@
 <!DOCTYPE HTML>
 <!--
-	Hielo by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
---><html><head><title>Hielo by TEMPLATED</title><meta charset="utf-8"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="assets/css/main.css"></head><body class="subpage">
+	Hielo by Mariam
+	Mariam.co @Mariamco
+	Released for free under the Creative Commons Attribution 3.0 license (Mariam.co/license)
+--><html><head><title>Hielo by Mariam</title><meta charset="utf-8"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="assets/css/main.css"></head><body class="subpage">
+<!-- Mariam's Drawing & Diagram Section -->
+<section id="mariam-design" class="wrapper style2" style="padding: 3em 0; background: #f8f8f8;">
+	<div class="inner">
+		<header class="align-center">
+			<h2 style="font-family: 'Segoe UI', sans-serif; color: #3a3a3a;">Mariam's Creative Zone</h2>
+			<p>Draw, design diagrams, and rate your experience!</p>
+		</header>
+		<div class="row uniform">
+			<!-- Drawing Canvas -->
+			<div class="6u 12u$(medium)">
+				<h3>Draw Your Idea</h3>
+				<div style="background: #fff; border: 2px solid #e0e0e0; border-radius: 8px; padding: 1em;">
+					<canvas id="mariam-canvas" width="400" height="300" style="border:1px solid #ccc; border-radius: 4px; width:100%; max-width:400px; background:#fafafa; cursor:crosshair;"></canvas>
+					<div style="margin-top: 1em;">
+						<button id="clear-canvas" class="button small alt">Clear</button>
+					</div>
+				</div>
+			</div>
+			<!-- Diagram Example -->
+		<div class="6u$ 12u$(medium)">
+			<h3>Your opinion matters to us!</h3>
+			<div style="background: #fff; border: 2px solid #e0e0e0; border-radius: 8px; padding: 1em; display: flex; align-items: center; justify-content: center; min-height: 340px;">
+				<svg id="creative-diagram" width="320" height="320" viewBox="0 0 320 320" style="display:block;max-width:100%;">
+					<!-- Animated Nodes -->
+					<circle id="node1" cx="80" cy="160" r="28" fill="#b3e5fc" stroke="#0288d1" stroke-width="3"/>
+					<circle id="node2" cx="160" cy="80" r="28" fill="#ffe082" stroke="#fbc02d" stroke-width="3"/>
+					<circle id="node3" cx="240" cy="160" r="28" fill="#c8e6c9" stroke="#43a047" stroke-width="3"/>
+					<circle id="node4" cx="160" cy="240" r="28" fill="#ffd6e7" stroke="#d81b60" stroke-width="3"/>
+					<!-- Animated Connections -->
+					<path id="link1" d="M108,160 Q160,120 160,108" stroke="#0288d1" stroke-width="4" fill="none" stroke-dasharray="60" stroke-dashoffset="60"/>
+					<path id="link2" d="M160,108 Q212,120 212,160" stroke="#fbc02d" stroke-width="4" fill="none" stroke-dasharray="60" stroke-dashoffset="60"/>
+					<path id="link3" d="M212,160 Q160,200 160,212" stroke="#43a047" stroke-width="4" fill="none" stroke-dasharray="60" stroke-dashoffset="60"/>
+					<path id="link4" d="M160,212 Q108,200 108,160" stroke="#d81b60" stroke-width="4" fill="none" stroke-dasharray="60" stroke-dashoffset="60"/>
+					<!-- Center Sparkle -->
+					<circle id="center-sparkle" cx="160" cy="160" r="0" fill="#ffd600" opacity="0.8"/>
+					<!-- Node Labels -->
+					<text x="80" y="165" text-anchor="middle" font-size="16" fill="#0288d1" font-family="Segoe UI">Idea</text>
+					<text x="160" y="75" text-anchor="middle" font-size="16" fill="#fbc02d" font-family="Segoe UI">Plan</text>
+					<text x="240" y="165" text-anchor="middle" font-size="16" fill="#43a047" font-family="Segoe UI">Build</text>
+					<text x="160" y="255" text-anchor="middle" font-size="16" fill="#d81b60" font-family="Segoe UI">Share</text>
+				</svg>
+			</div>
+			<script>
+			// Creative Diagram Animation
+			setTimeout(() => {
+				const svg = document.getElementById('creative-diagram');
+				const links = [
+					svg.getElementById('link1'),
+					svg.getElementById('link2'),
+					svg.getElementById('link3'),
+					svg.getElementById('link4')
+				];
+				const nodes = [
+					svg.getElementById('node1'),
+					svg.getElementById('node2'),
+					svg.getElementById('node3'),
+					svg.getElementById('node4')
+				];
+				const sparkle = svg.getElementById('center-sparkle');
+				let linkProgress = [0,0,0,0];
+				let nodePulse = 0;
+				let sparkleGrow = 0;
+				function animateLinks(i=0) {
+					if (i >= links.length) {
+						animateSparkle();
+						return;
+					}
+					let len = 60;
+					function drawLink() {
+						linkProgress[i] += 4;
+						if (linkProgress[i] > len) linkProgress[i] = len;
+						links[i].setAttribute('stroke-dashoffset', len - linkProgress[i]);
+						if (linkProgress[i] < len) {
+							requestAnimationFrame(drawLink);
+						} else {
+							animateLinks(i+1);
+						}
+					}
+					drawLink();
+				}
+				function animateNodes() {
+					nodePulse += 0.08;
+					nodes.forEach((n, idx) => {
+						const base = 28;
+						const pulse = 2 + 2*Math.sin(nodePulse + idx);
+						n.setAttribute('r', base + pulse);
+					});
+					requestAnimationFrame(animateNodes);
+				}
+				function animateSparkle() {
+					sparkleGrow += 0.12;
+					const r = 10 + 6*Math.abs(Math.sin(sparkleGrow));
+					sparkle.setAttribute('r', r);
+					sparkle.setAttribute('opacity', 0.6 + 0.3*Math.cos(sparkleGrow));
+					requestAnimationFrame(animateSparkle);
+				}
+				animateLinks();
+				animateNodes();
+			}, 800);
+			</script>
+		</div>
+		</div>
+		<!-- Rating Section -->
+		<div class="row" style="margin-top:2em;">
+			<div class="12u$ align-center">
+				<h3>Rate Mariam's Design</h3>
+				<div id="rating-stars" style="font-size:2em; color:#ffd600; cursor:pointer;">
+					<span data-value="1">&#9734;</span>
+					<span data-value="2">&#9734;</span>
+					<span data-value="3">&#9734;</span>
+					<span data-value="4">&#9734;</span>
+					<span data-value="5">&#9734;</span>
+				</div>
+				<div id="rating-count" style="margin-top:0.5em; color:#888;">No ratings yet</div>
+			</div>
+		</div>
+		<!-- Store & Viewers Section -->
+		<div class="row" style="margin-top:2em;">
+			<div class="6u 12u$(medium)">
+				<h3>Store</h3>
+				<div style="background:#fff; border:2px solid #e0e0e0; border-radius:8px; padding:1em;">
+					<ul id="store-list" style="list-style:none; padding:0;">
+						<li>
+							<img src="images/pic01.jpg" alt="Product 1" style="width:60px; height:60px; border-radius:6px; vertical-align:middle; margin-right:1em;">
+							<span style="font-weight:bold;">Mariam Art Print</span> - <span style="color:#0288d1;">$12.99</span>
+							<button class="button small special" style="float:right;">Buy</button>
+						</li>
+						<li style="margin-top:1em;">
+							<img src="images/pic02.jpg" alt="Product 2" style="width:60px; height:60px; border-radius:6px; vertical-align:middle; margin-right:1em;">
+							<span style="font-weight:bold;">Creative Mug</span> - <span style="color:#0288d1;">$8.50</span>
+							<button class="button small special" style="float:right;">Buy</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="6u$ 12u$(medium)">
+				<h3>Anyone Visiting</h3>
+				<div style="background:#fff; border:2px solid #e0e0e0; border-radius:8px; padding:1em; text-align:center;">
+					<div style="font-size:2.5em; color:#0288d1;" id="viewer-count">0</div>
+					<div style="color:#888;">Anyone is visiting this page</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script>
+// Drawing Canvas Logic
+const canvas = document.getElementById('mariam-canvas');
+if (canvas) {
+	const ctx = canvas.getContext('2d');
+	let drawing = false;
+	let last = {x:0, y:0};
+	canvas.addEventListener('mousedown', e => {
+		drawing = true;
+		last = {x: e.offsetX, y: e.offsetY};
+	});
+	canvas.addEventListener('mousemove', e => {
+		if (!drawing) return;
+		ctx.beginPath();
+		ctx.moveTo(last.x, last.y);
+		ctx.lineTo(e.offsetX, e.offsetY);
+		ctx.strokeStyle = "#0288d1";
+		ctx.lineWidth = 2;
+		ctx.stroke();
+		last = {x: e.offsetX, y: e.offsetY};
+	});
+	canvas.addEventListener('mouseup', () => drawing = false);
+	canvas.addEventListener('mouseleave', () => drawing = false);
+	document.getElementById('clear-canvas').onclick = () => {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	};
+}
 
+// Creative Classic Drawing Animation (Advanced SVG Art)
+const mariamCanvas = document.getElementById('mariam-canvas');
+if (mariamCanvas) {
+	mariamCanvas.style.display = 'none';
+	const animDiv = document.createElement('div');
+	animDiv.style.width = '100%';
+	animDiv.style.height = '340px';
+	animDiv.style.display = 'flex';
+	animDiv.style.alignItems = 'center';
+	animDiv.style.justifyContent = 'center';
+	animDiv.innerHTML = `
+		<svg width="340" height="340" viewBox="0 0 340 340" style="background:linear-gradient(135deg,#fffbe7 60%,#ffe082 100%);border-radius:18px;box-shadow:0 8px 32px #ffd60055;">
+			<!-- Paper Sheet with shadow -->
+			<rect x="50" y="50" width="240" height="240" rx="22" fill="#fff" stroke="#e0c97a" stroke-width="5" filter="url(#shadow)"/>
+			<defs>
+				<filter id="shadow" x="0" y="0" width="400%" height="400%">
+					<feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#ffe082" flood-opacity="0.5"/>
+				</filter>
+				<radialGradient id="paperLight" cx="50%" cy="40%" r="80%">
+					<stop offset="0%" stop-color="#fffbe7" stop-opacity="1"/>
+					<stop offset="100%" stop-color="#fffde4" stop-opacity="0.7"/>
+				</radialGradient>
+			</defs>
+			<!-- Animated Pencil -->
+			<g id="pencil" style="opacity:0;">
+				<rect x="210" y="60" width="60" height="16" rx="7" fill="#fbc02d" stroke="#bfa13a" stroke-width="2" transform="rotate(-30 210 60)"/>
+				<polygon points="270,68 282,74 270,82" fill="#d7ccc8"/>
+				<polygon points="282,74 286,76 282,78" fill="#757575"/>
+				<ellipse cx="215" cy="68" rx="6" ry="7" fill="#fffde4" opacity="0.7"/>
+			</g>
+			<!-- Classic Drawing Path (spiral + flourish) -->
+			<path id="classicDraw" d="M90,220 Q120,180 160,200 Q200,220 220,180 Q240,140 180,120 Q120,100 160,80 Q200,60 210,110 Q220,160 120,160 Q80,160 110,110 Q140,60 200,80" 
+				fill="none" stroke="#0288d1" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="1200" stroke-dashoffset="1200" filter="url(#glow)"/>
+			<filter id="glow">
+				<feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+				<feMerge>
+					<feMergeNode in="coloredBlur"/>
+					<feMergeNode in="SourceGraphic"/>
+				</feMerge>
+			</filter>
+			<!-- Decorative swirl with sparkle -->
+			<path id="swirl" d="M120,250 Q160,270 200,250" fill="none" stroke="#ffd600" stroke-width="3.5" stroke-dasharray="200" stroke-dashoffset="200"/>
+			<circle id="sparkle" cx="120" cy="250" r="0" fill="#ffd600" opacity="0.7"/>
+			<!-- Floating geometric shapes for creativity -->
+			<circle id="float1" cx="80" cy="80" r="10" fill="#b3e5fc" opacity="0.5"/>
+			<rect id="float2" x="250" y="90" width="16" height="16" rx="4" fill="#ffe082" opacity="0.5"/>
+			<polygon id="float3" points="170,60 180,50 190,60" fill="#c8e6c9" opacity="0.5"/>
+			<!-- Title -->
+			<text x="170" y="320" text-anchor="middle" font-size="24" fill="#0288d1" font-family="Segoe UI" style="font-weight:bold;letter-spacing:1.5px;filter:url(#glow);">Classic Drawing</text>
+		</svg>
+	`;
+	mariamCanvas.parentNode.insertBefore(animDiv, mariamCanvas);
+
+	setTimeout(() => {
+		const svg = animDiv.querySelector('svg');
+		const path = svg.querySelector('#classicDraw');
+		const swirl = svg.querySelector('#swirl');
+		const pencil = svg.querySelector('#pencil');
+		const sparkle = svg.querySelector('#sparkle');
+		const float1 = svg.querySelector('#float1');
+		const float2 = svg.querySelector('#float2');
+		const float3 = svg.querySelector('#float3');
+		const totalLen = path.getTotalLength();
+		const swirlLen = swirl.getTotalLength();
+		let progress = 0;
+		let swirlProgress = 0;
+		let sparkleProgress = 0;
+		let floatAngle = 0;
+
+		function animateDraw() {
+			progress += 12;
+			if (progress > totalLen) progress = totalLen;
+			path.setAttribute('stroke-dashoffset', totalLen - progress);
+
+			// Move pencil along path
+			if (progress < totalLen) {
+				const pt = path.getPointAtLength(progress);
+				const prev = path.getPointAtLength(Math.max(progress-1,0));
+				const angle = Math.atan2(pt.y - prev.y, pt.x - prev.x) * 180 / Math.PI;
+				pencil.style.opacity = 1;
+				pencil.setAttribute('transform', `translate(${pt.x-220},${pt.y-68}) rotate(${angle},220,68)`);
+				requestAnimationFrame(animateDraw);
+			} else {
+				pencil.style.opacity = 0;
+				animateSwirl();
+			}
+		}
+
+		function animateSwirl() {
+			swirlProgress += 10;
+			if (swirlProgress > swirlLen) swirlProgress = swirlLen;
+			swirl.setAttribute('stroke-dashoffset', swirlLen - swirlProgress);
+			// Animate sparkle at the tip of the swirl
+			if (swirlProgress < swirlLen) {
+				const pt = swirl.getPointAtLength(swirlProgress);
+				sparkle.setAttribute('cx', pt.x);
+				sparkle.setAttribute('cy', pt.y);
+				sparkle.setAttribute('r', 6 + 4 * Math.sin(swirlProgress/20));
+				sparkle.setAttribute('opacity', 0.7 + 0.3 * Math.cos(swirlProgress/10));
+				requestAnimationFrame(animateSwirl);
+			} else {
+				sparkle.setAttribute('r', 0);
+			}
+		}
+
+		function animateFloat() {
+			floatAngle += 0.02;
+			float1.setAttribute('cy', 80 + 8 * Math.sin(floatAngle));
+			float2.setAttribute('y', 90 + 10 * Math.cos(floatAngle + 1));
+			float3.setAttribute('points', 
+				`${170+3*Math.sin(floatAngle)},${60+3*Math.cos(floatAngle)} 
+				${180+3*Math.sin(floatAngle+1)},${50+3*Math.cos(floatAngle+1)} 
+				${190+3*Math.sin(floatAngle+2)},${60+3*Math.cos(floatAngle+2)}`
+			);
+			requestAnimationFrame(animateFloat);
+		}
+
+		animateDraw();
+		animateFloat();
+	}, 600);
+}
+
+// Creative Design for Page Rating
+let rating = 0, count = 0, total = 0;
+const stars = document.querySelectorAll('#rating-stars span');
+const countDiv = document.getElementById('rating-count');
+
+// Load stored rating data
+if (localStorage.getItem('mariamRatingCount')) {
+	count = parseInt(localStorage.getItem('mariamRatingCount'));
+	total = parseInt(localStorage.getItem('mariamRatingTotal'));
+	rating = Math.round(total / count) || 0;
+	if (count > 0) {
+		stars.forEach((s, i) => {
+			s.innerHTML = i < rating ? '&#11088;' : '&#9734;';
+			s.style.transform = i < rating ? 'scale(1.2) rotate(-10deg)' : '';
+			s.style.transition = 'transform 0.2s';
+			s.style.color = i < rating ? '#ffd600' : '#bbb';
+			s.style.textShadow = i < rating ? '0 0 10px #ffd60088' : '';
+		});
+		countDiv.innerHTML = `<span style="color:#0288d1;font-weight:bold;">&#128079; ${(total/count).toFixed(1)}</span> <span style="color:#888;">(${count} vote${count>1?'s':''})</span>`;
+	}
+}
+
+stars.forEach(star => {
+	star.addEventListener('mouseover', function() {
+		const val = parseInt(this.getAttribute('data-value'));
+		stars.forEach((s, i) => {
+			s.innerHTML = i < val ? '&#11088;' : '&#9734;';
+			s.style.transform = i < val ? 'scale(1.3) rotate(-10deg)' : '';
+			s.style.transition = 'transform 0.2s';
+			s.style.color = i < val ? '#ffd600' : '#bbb';
+			s.style.textShadow = i < val ? '0 0 12px #ffd600cc' : '';
+		});
+	});
+	star.addEventListener('mouseout', function() {
+		stars.forEach((s, i) => {
+			s.innerHTML = i < rating ? '&#11088;' : '&#9734;';
+			s.style.transform = i < rating ? 'scale(1.2) rotate(-10deg)' : '';
+			s.style.color = i < rating ? '#ffd600' : '#bbb';
+			s.style.textShadow = i < rating ? '0 0 10px #ffd60088' : '';
+		});
+	});
+	star.addEventListener('click', function() {
+		rating = parseInt(this.getAttribute('data-value'));
+		count++;
+		total += rating;
+		stars.forEach((s, i) => {
+			s.innerHTML = i < rating ? '&#11088;' : '&#9734;';
+			s.style.transform = i < rating ? 'scale(1.2) rotate(-10deg)' : '';
+			s.style.color = i < rating ? '#ffd600' : '#bbb';
+			s.style.textShadow = i < rating ? '0 0 10px #ffd60088' : '';
+		});
+		countDiv.innerHTML = `<span style="color:#0288d1;font-weight:bold;">&#128079; ${(total/count).toFixed(1)}</span> <span style="color:#888;">(${count} vote${count>1?'s':''})</span>`;
+		// Store in localStorage
+		localStorage.setItem('mariamRatingCount', count);
+		localStorage.setItem('mariamRatingTotal', total);
+
+		// Animate stars burst
+		stars.forEach((s, i) => {
+			if (i < rating) {
+				s.animate([
+					{transform: 'scale(1.2) rotate(-10deg)', filter: 'brightness(1)'},
+					{transform: 'scale(1.5) rotate(-10deg)', filter: 'brightness(1.5)'},
+					{transform: 'scale(1.2) rotate(-10deg)', filter: 'brightness(1)'}
+				], {duration: 400, easing: 'ease'});
+			}
+		});
+	});
+});
+
+// Viewers Counter (Simulated)
+function updateViewerCount() {
+	const min = 3, max = 25;
+	const viewers = Math.floor(Math.random() * (max - min + 1)) + min;
+	document.getElementById('viewer-count').textContent = viewers;
+}
+updateViewerCount();
+setInterval(updateViewerCount, 5000);
+</script>
 		<!-- Header -->
-			<header id="header"><div class="logo"><a href="index.html">Hielo <span>by TEMPLATED</span></a></div>
+			<header id="header">
+				<div class="logo">
+					<a href="index.html">Hielo <span>by Mariam</span></a>
+				</div>
 				<a href="#menu">Menu</a>
-			</header><!-- Nav --><nav id="menu"><ul class="links"><li><a href="index.html">Home</a></li>
+			</header>
+			<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
 					<li><a href="generic.html">Generic</a></li>
-					<li><a href="elements.html">Elements</a></li>
-				</ul></nav><!-- One --><section id="One" class="wrapper style3"><div class="inner">
-					<header class="align-center"><p>Sed amet nulla</p>
-						<h2>Elements</h2>
-					</header></div>
+					<li><a href="elements.html">RateIng</a></li>
+				</ul>
+			</nav>
+			<!-- Drawing Section Banner -->
+			<section id="drawing-banner" class="wrapper style3">
+				<div class="inner">
+					<header class="align-center">
+						<p>Unleash your creativity</p>
+						<h2>Drawing & Creative Zone</h2>
+					</header>
+				</div>
+			</section>
 			</section><!-- Main --><div id="main" class="container">
 
 				<!-- Elements -->
-					<h2 id="elements">Elements</h2>
-					<div class="row 200%">
-						<div class="6u 12u$(medium)">
-
-							<!-- Text stuff -->
-								<h3>Text</h3>
-								<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-								This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-								This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>.
-								Finally, this is a <a href="#">link</a>.</p>
-								<hr><h2>Heading Level 2</h2>
-								<h3>Heading Level 3</h3>
-								<h4>Heading Level 4</h4>
-								<h5>Heading Level 5</h5>
-								<h6>Heading Level 6</h6>
-								<hr><header><h2>Heading with a Subtitle</h2>
-									<p>Lorem ipsum dolor sit amet nullam id egestas urna aliquam</p>
-								</header><p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
-								<header><h3>Heading with a Subtitle</h3>
-									<p>Lorem ipsum dolor sit amet nullam id egestas urna aliquam</p>
-								</header><p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
-								<header><h4>Heading with a Subtitle</h4>
-									<p>Lorem ipsum dolor sit amet nullam id egestas urna aliquam</p>
-								</header><p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
-
-							<!-- Lists -->
-								<h3>Lists</h3>
-								<div class="row">
-									<div class="6u 12u$(small)">
-
-										<h4>Unordered</h4>
-										<ul><li>Dolor pulvinar etiam magna etiam.</li>
-											<li>Sagittis adipiscing lorem eleifend.</li>
-											<li>Felis enim feugiat dolore viverra.</li>
-										</ul><h4>Alternate</h4>
-										<ul class="alt"><li>Dolor pulvinar etiam magna etiam.</li>
-											<li>Sagittis adipiscing lorem eleifend.</li>
-											<li>Felis enim feugiat dolore viverra.</li>
-										</ul></div>
-									<div class="6u$ 12u$(small)">
-
-										<h4>Ordered</h4>
-										<ol><li>Dolor pulvinar etiam magna etiam.</li>
-											<li>Etiam vel felis at lorem sed viverra.</li>
-											<li>Felis enim feugiat dolore viverra.</li>
-											<li>Dolor pulvinar etiam magna etiam.</li>
-											<li>Etiam vel felis at lorem sed viverra.</li>
-											<li>Felis enim feugiat dolore viverra.</li>
-										</ol><h4>Icons</h4>
-										<ul class="icons"><li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-											<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-											<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-											<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
-											<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-											<li><a href="#" class="icon fa-tumblr"><span class="label">Tumblr</span></a></li>
-										</ul></div>
+					<!-- Mariam's Drawing Gallery - Creative Design -->
+					<section id="mariam-drawings-gallery" style="margin-bottom:2em;">
+						<h2 style="font-family:'Segoe UI',sans-serif;color:#0288d1;text-align:center;margin-bottom:0.5em;">
+							Mariam's Drawing Gallery
+						</h2>
+						<p style="text-align:center;color:#888;margin-bottom:2em;">
+							Explore creative sketches and digital art by Mariam.
+						</p>
+						<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:2em;">
+							<!-- Drawing Card 1 -->
+							<div class="drawing-card" data-id="drawing1" style="background:#fffbe7;border-radius:18px;box-shadow:0 4px 24px #ffd60033;overflow:hidden;width:320px;transition:transform 0.2s;position:relative;">
+								<div style="background:linear-gradient(135deg,#b3e5fc 60%,#fffbe7 100%);padding:1.5em 1em 1em 1em;">
+									<img src="images/art4.jpg" alt="Mariam Drawing 1" style="width:100%;border-radius:12px;box-shadow:0 2px 12px #0288d122;">
 								</div>
-								<h4>Definition</h4>
-								<dl><dt>Item 1</dt>
-									<dd>
-										<p>Lorem ipsum dolor vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-									</dd>
-									<dt>Item 2</dt>
-									<dd>
-										<p>Lorem ipsum dolor vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-									</dd>
-									<dt>Item 3</dt>
-									<dd>
-										<p>Lorem ipsum dolor vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-									</dd>
-								</dl><h4>Actions</h4>
-								<ul class="actions"><li><a href="#" class="button special">Default</a></li>
-									<li><a href="#" class="button">Default</a></li>
-									<li><a href="#" class="button alt">Default</a></li>
-								</ul><ul class="actions small"><li><a href="#" class="button special small">Small</a></li>
-									<li><a href="#" class="button small">Small</a></li>
-									<li><a href="#" class="button alt small">Small</a></li>
-								</ul><div class="row">
-									<div class="3u 12u$(small)">
-										<ul class="actions vertical"><li><a href="#" class="button special">Default</a></li>
-											<li><a href="#" class="button">Default</a></li>
-											<li><a href="#" class="button alt">Default</a></li>
-										</ul></div>
-									<div class="3u 12u$(small)">
-										<ul class="actions vertical small"><li><a href="#" class="button special small">Small</a></li>
-											<li><a href="#" class="button small">Small</a></li>
-											<li><a href="#" class="button alt small">Small</a></li>
-										</ul></div>
-									<div class="3u 12u$(small)">
-										<ul class="actions vertical"><li><a href="#" class="button special fit">Default</a></li>
-											<li><a href="#" class="button fit">Default</a></li>
-											<li><a href="#" class="button alt fit">Default</a></li>
-										</ul></div>
-									<div class="3u$ 12u$(small)">
-										<ul class="actions vertical small"><li><a href="#" class="button special small fit">Small</a></li>
-											<li><a href="#" class="button small fit">Small</a></li>
-											<li><a href="#" class="button alt small fit">Small</a></li>
-										</ul></div>
+								<div style="padding:1em 1.2em 1.2em 1.2em;">
+									<h3 style="margin:0 0 0.5em 0;color:#0288d1;font-size:1.2em;">Blue Dream</h3>
+									<p style="color:#666;font-size:1em;margin-bottom:0.5em;">A digital sketch inspired by the calmness of the sky and water.</p>
+									<div style="display:flex;align-items:center;gap:0.5em;">
+										<span class="drawing-rating" style="color:#ffd600;font-size:1.2em;">&#11088; <span class="rate-value">4.8</span></span>
+										<span class="drawing-count" style="color:#bbb;font-size:0.95em;">(<span class="count-value">21</span> votes)</span>
+									</div>
+									<div class="drawing-stars" style="margin-top:0.5em;font-size:1.3em;color:#ffd600;cursor:pointer;">
+										<span data-value="1">&#9734;</span>
+										<span data-value="2">&#9734;</span>
+										<span data-value="3">&#9734;</span>
+										<span data-value="4">&#9734;</span>
+										<span data-value="5">&#9734;</span>
+									</div>
 								</div>
-
-							<!-- Blockquote -->
-								<h3>Blockquote</h3>
-								<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis.</blockquote>
-
-							<!-- Table -->
-								<h3>Table</h3>
-
-								<h4>Default</h4>
-								<div class="table-wrapper">
-									<table><thead><tr><th>Name</th>
-												<th>Description</th>
-												<th>Price</th>
-											</tr></thead><tbody><tr><td>Item 1</td>
-												<td>Ante turpis integer aliquet porttitor.</td>
-												<td>29.99</td>
-											</tr><tr><td>Item 2</td>
-												<td>Vis ac commodo adipiscing arcu aliquet.</td>
-												<td>19.99</td>
-											</tr><tr><td>Item 3</td>
-												<td> Morbi faucibus arcu accumsan lorem.</td>
-												<td>29.99</td>
-											</tr><tr><td>Item 4</td>
-												<td>Vitae integer tempus condimentum.</td>
-												<td>19.99</td>
-											</tr><tr><td>Item 5</td>
-												<td>Ante turpis integer aliquet porttitor.</td>
-												<td>29.99</td>
-											</tr></tbody><tfoot><tr><td colspan="2"></td>
-												<td>100.00</td>
-											</tr></tfoot></table></div>
-
-								<h4>Alternate</h4>
-								<div class="table-wrapper">
-									<table class="alt"><thead><tr><th>Name</th>
-												<th>Description</th>
-												<th>Price</th>
-											</tr></thead><tbody><tr><td>Item 1</td>
-												<td>Ante turpis integer aliquet porttitor.</td>
-												<td>29.99</td>
-											</tr><tr><td>Item 2</td>
-												<td>Vis ac commodo adipiscing arcu aliquet.</td>
-												<td>19.99</td>
-											</tr><tr><td>Item 3</td>
-												<td> Morbi faucibus arcu accumsan lorem.</td>
-												<td>29.99</td>
-											</tr><tr><td>Item 4</td>
-												<td>Vitae integer tempus condimentum.</td>
-												<td>19.99</td>
-											</tr><tr><td>Item 5</td>
-												<td>Ante turpis integer aliquet porttitor.</td>
-												<td>29.99</td>
-											</tr></tbody><tfoot><tr><td colspan="2"></td>
-												<td>100.00</td>
-											</tr></tfoot></table></div>
-
+								<!-- Decorative SVG -->
+								<svg width="60" height="60" style="position:absolute;top:-18px;right:-18px;pointer-events:none;">
+									<circle cx="30" cy="30" r="18" fill="#ffe082" opacity="0.7"/>
+									<circle cx="45" cy="15" r="7" fill="#0288d1" opacity="0.25"/>
+								</svg>
+							</div>
+							<!-- Drawing Card 2 -->
+							<div class="drawing-card" data-id="drawing2" style="background:#fffbe7;border-radius:18px;box-shadow:0 4px 24px #ffd60033;overflow:hidden;width:320px;transition:transform 0.2s;position:relative;">
+								<div style="background:linear-gradient(135deg,#446a84 60%,#fffbe7 100%);padding:1.5em 1em 1em 1em;">
+									<img src="images/art5.jpg" alt="Mariam Drawing 2" style="width:100%;border-radius:12px;box-shadow:0 2px 12px #d81b6022;">
+								</div>
+								<div style="padding:1em 1.2em 1.2em 1.2em;">
+									<h3 style="margin:0 0 0.5em 0;color:#d81b60;font-size:1.2em;">Pink Blossom</h3>
+									<p style="color:#666;font-size:1em;margin-bottom:0.5em;">A vibrant floral illustration celebrating spring and new beginnings.</p>
+									<div style="display:flex;align-items:center;gap:0.5em;">
+										<span class="drawing-rating" style="color:#ffd600;font-size:1.2em;">&#11088; <span class="rate-value">4.9</span></span>
+										<span class="drawing-count" style="color:#bbb;font-size:0.95em;">(<span class="count-value">18</span> votes)</span>
+									</div>
+									<div class="drawing-stars" style="margin-top:0.5em;font-size:1.3em;color:#ffd600;cursor:pointer;">
+										<span data-value="1">&#9734;</span>
+										<span data-value="2">&#9734;</span>
+										<span data-value="3">&#9734;</span>
+										<span data-value="4">&#9734;</span>
+										<span data-value="5">&#9734;</span>
+									</div>
+								</div>
+								<svg width="60" height="60" style="position:absolute;top:-18px;right:-18px;pointer-events:none;">
+									<circle cx="30" cy="30" r="18" fill="#ffd6e7" opacity="0.7"/>
+									<circle cx="45" cy="15" r="7" fill="#d81b60" opacity="0.25"/>
+								</svg>
+							</div>
+							<!-- Drawing Card 3 (SVG Art Example) -->
+							<div class="drawing-card" data-id="drawing3" style="background:#fffbe7;border-radius:18px;box-shadow:0 4px 24px #ffd60033;overflow:hidden;width:320px;transition:transform 0.2s;position:relative;">
+								<div style="background:linear-gradient(135deg,#4898d2 60%,#fffbe7 100%);padding:1.5em 1em 1em 1em;">
+									<img src="images/art7.jpg" alt="Mariam Drawing 2"
+										style="width:100%;border-radius:12px;box-shadow:0 2px 12px #d81b6022;">
+								</div>
+								<div style="padding:1em 1.2em 1.2em 1.2em;">
+									<h3 style="margin:0 0 0.5em 0;color:#4898d2;font-size:1.2em;">Creative Lines</h3>
+									<p style="color:#666;font-size:1em;margin-bottom:0.5em;">A playful SVG composition showing Mariam's love for digital art and geometry.</p>
+									<div style="display:flex;align-items:center;gap:0.5em;">
+										<span class="drawing-rating" style="color:#ffd600;font-size:1.2em;">&#11088; <span class="rate-value">5.0</span></span>
+										<span class="drawing-count" style="color:#bbb;font-size:0.95em;">(<span class="count-value">12</span> votes)</span>
+									</div>
+									<div class="drawing-stars" style="margin-top:0.5em;font-size:1.3em;color:#ffd600;cursor:pointer;">
+										<span data-value="1">&#9734;</span>
+										<span data-value="2">&#9734;</span>
+										<span data-value="3">&#9734;</span>
+										<span data-value="4">&#9734;</span>
+										<span data-value="5">&#9734;</span>
+									</div>
+								</div>
+								<svg width="60" height="60" style="position:absolute;top:-18px;right:-18px;pointer-events:none;">
+									<circle cx="30" cy="30" r="18" fill="#c8e6c9" opacity="0.7"/>
+									<circle cx="45" cy="15" r="7" fill="#43a047" opacity="0.25"/>
+								</svg>
+							</div>
 						</div>
-						<div class="6u$ 12u$(medium)">
+						<script>
+						// Drawing Gallery Rating Logic
+						document.querySelectorAll('.drawing-card').forEach(function(card) {
+							const id = card.getAttribute('data-id');
+							const stars = card.querySelectorAll('.drawing-stars span');
+							const rateValue = card.querySelector('.rate-value');
+							const countValue = card.querySelector('.count-value');
 
-							<!-- Buttons -->
-								<h3>Buttons</h3>
-								<ul class="actions"><li><a href="#" class="button special">Special</a></li>
-									<li><a href="#" class="button">Default</a></li>
-									<li><a href="#" class="button alt">Alternate</a></li>
-								</ul><ul class="actions"><li><a href="#" class="button special big">Big</a></li>
-									<li><a href="#" class="button">Default</a></li>
-									<li><a href="#" class="button alt small">Small</a></li>
-								</ul><ul class="actions fit"><li><a href="#" class="button special fit">Fit</a></li>
-									<li><a href="#" class="button fit">Fit</a></li>
-									<li><a href="#" class="button alt fit">Fit</a></li>
-								</ul><ul class="actions fit small"><li><a href="#" class="button special fit small">Fit + Small</a></li>
-									<li><a href="#" class="button fit small">Fit + Small</a></li>
-									<li><a href="#" class="button alt fit small">Fit + Small</a></li>
-								</ul><ul class="actions"><li><a href="#" class="button special icon fa-search">Icon</a></li>
-									<li><a href="#" class="button icon fa-download">Icon</a></li>
-									<li><a href="#" class="button alt icon fa-check">Icon</a></li>
-								</ul><ul class="actions"><li><span class="button special disabled">Special</span></li>
-									<li><span class="button disabled">Default</span></li>
-									<li><span class="button alt disabled">Alternate</span></li>
-								</ul><!-- Form --><h3>Form</h3>
+							// Load stored data
+							let count = parseInt(localStorage.getItem(id + '_count')) || parseInt(countValue.textContent) || 0;
+							let total = parseFloat(localStorage.getItem(id + '_total')) || (parseFloat(rateValue.textContent) * count) || 0;
+							let rating = count ? (total / count) : parseFloat(rateValue.textContent);
 
-								<form method="post" action="#">
-									<div class="row uniform">
-										<div class="6u 12u$(xsmall)">
-											<input type="text" name="name" id="name" value="" placeholder="Name"></div>
-										<div class="6u$ 12u$(xsmall)">
-											<input type="email" name="email" id="email" value="" placeholder="Email"></div>
-										<!-- Break -->
-										<div class="12u$">
-											<div class="select-wrapper">
-												<select name="category" id="category"><option value="">- Category -</option><option value="1">Manufacturing</option><option value="1">Shipping</option><option value="1">Administration</option><option value="1">Human Resources</option></select></div>
-										</div>
-										<!-- Break -->
-										<div class="4u 12u$(small)">
-											<input type="radio" id="priority-low" name="priority" checked><label for="priority-low">Low Priority</label>
-										</div>
-										<div class="4u 12u$(small)">
-											<input type="radio" id="priority-normal" name="priority"><label for="priority-normal">Normal Priority</label>
-										</div>
-										<div class="4u$ 12u$(small)">
-											<input type="radio" id="priority-high" name="priority"><label for="priority-high">High Priority</label>
-										</div>
-										<!-- Break -->
-										<div class="6u 12u$(small)">
-											<input type="checkbox" id="copy" name="copy"><label for="copy">Email me a copy of this message</label>
-										</div>
-										<div class="6u$ 12u$(small)">
-											<input type="checkbox" id="human" name="human" checked><label for="human">I am a human and not a robot</label>
-										</div>
-										<!-- Break -->
-										<div class="12u$">
-											<textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea></div>
-										<!-- Break -->
-										<div class="12u$">
-											<ul class="actions"><li><input type="submit" value="Send Message"></li>
-												<li><input type="reset" value="Reset" class="alt"></li>
-											</ul></div>
-									</div>
-								</form>
+							function updateStarsDisplay(val) {
+								stars.forEach((s, i) => {
+									s.innerHTML = i < val ? '&#11088;' : '&#9734;';
+									s.style.color = i < val ? '#ffd600' : '#bbb';
+									s.style.transform = i < val ? 'scale(1.2) rotate(-10deg)' : '';
+									s.style.textShadow = i < val ? '0 0 10px #ffd60088' : '';
+								});
+							}
 
-								<hr><form method="post" action="#">
-									<div class="row uniform">
-										<div class="9u 12u$(small)">
-											<input type="text" name="query" id="query" value="" placeholder="Query"></div>
-										<div class="3u$ 12u$(small)">
-											<input type="submit" value="Search" class="fit"></div>
-									</div>
-								</form>
+							updateStarsDisplay(Math.round(rating));
 
-							<!-- Image -->
-								<h3>Image</h3>
+							stars.forEach(star => {
+								star.addEventListener('mouseover', function() {
+									const val = parseInt(this.getAttribute('data-value'));
+									updateStarsDisplay(val);
+								});
+								star.addEventListener('mouseout', function() {
+									updateStarsDisplay(Math.round(rating));
+								});
+								star.addEventListener('click', function() {
+									const val = parseInt(this.getAttribute('data-value'));
+									count++;
+									total += val;
+									rating = total / count;
+									rateValue.textContent = rating.toFixed(1);
+									countValue.textContent = count;
+									localStorage.setItem(id + '_count', count);
+									localStorage.setItem(id + '_total', total);
+									updateStarsDisplay(val);
+									// Animate stars burst
+									stars.forEach((s, i) => {
+										if (i < val) {
+											s.animate([
+												{transform: 'scale(1.2) rotate(-10deg)', filter: 'brightness(1)'},
+												{transform: 'scale(1.5) rotate(-10deg)', filter: 'brightness(1.5)'},
+												{transform: 'scale(1.2) rotate(-10deg)', filter: 'brightness(1)'}
+											], {duration: 400, easing: 'ease'});
+										}
+									});
+								});
+							});
+						});
+						</script>
+					</section>
+					<!-- End Mariam's Drawing Gallery -->
 
-								<h4>Fit</h4>
-								<span class="image fit"><img src="images/pic01.jpg" alt="" width="600" height="300"></span>
-								<div class="box alt">
-									<div class="row 50% uniform">
-										<div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" width="600" height="300"></span></div>
-										<div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" width="600" height="300"></span></div>
-										<div class="4u$"><span class="image fit"><img src="images/pic01.jpg" alt="" width="600" height="300"></span></div>
-										<!-- Break -->
-										<div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" width="600" height="300"></span></div>
-										<div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" width="600" height="300"></span></div>
-										<div class="4u$"><span class="image fit"><img src="images/pic01.jpg" alt="" width="600" height="300"></span></div>
-										<!-- Break -->
-										<div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" width="600" height="300"></span></div>
-										<div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" width="600" height="300"></span></div>
-										<div class="4u$"><span class="image fit"><img src="images/pic01.jpg" alt="" width="600" height="300"></span></div>
-									</div>
-								</div>
-
-								<h4>Left &amp; Right</h4>
-								<p><span class="image left"><img src="images/pic02.jpg" alt="" width="600" height="300"></span>Lorem ipsum dolor sit accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Vestibulum ante ipsum primis in faucibus magna blandit adipiscing eu felis iaculis volutpat lorem ipsum dolor sit amet dolor consequat.</p>
-								<p><span class="image right"><img src="images/pic02.jpg" alt="" width="600" height="300"></span>Lorem ipsum dolor sit accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Vestibulum ante ipsum primis in faucibus magna blandit adipiscing eu felis iaculis volutpat lorem ipsum dolor sit amet dolor consequat.</p>
-
-							<!-- Box -->
-								<h3>Box</h3>
-								<div class="box">
-									<p>Felis sagittis eget tempus primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Magna sed etiam ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus lorem ipsum dolor sit amet nullam.</p>
-								</div>
-
-							<!-- Preformatted Code -->
-								<h3>Preformatted</h3>
-								<pre><code>i = 0;
-
-while (!deck.isInOrder()) {
-    print 'Iteration ' + i;
-    deck.shuffle();
-    i++;
-}
-
-print 'It took ' + i + ' iterations to sort the deck.';
-</code></pre>
-
-						</div>
-					</div>
 
 			</div>
 
 		<!-- Footer -->
-			<footer id="footer"><div class="container">
-					<ul class="icons"><li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
-					</ul></div>
-			</footer><div class="copyright">
-			Made with <a href="https://templated.co/">Templated</a>.
+			<footer id="footer">
+				<div class="container">
+					<ul class="icons"><li><a href="https://x.com/mariama16093248?s=11" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="https://www.facebook.com/share/1ENLFNiE34/?mibextid=wwXIfr" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="https://www.instagram.com/mari.amabdelrazek/profilecard/?igsh=cHE4dGozaTJicTB6" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="mariamabdelrazek226@gmail.com" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+					</ul>
+				</div>
+			</footer>
+			<div class="copyright">
+			<span id="signature-container" style="display:inline-block; vertical-align:middle;">
+				<svg id="signature-svg" width="220" height="40" viewBox="0 0 220 40" style="vertical-align:middle;">
+					<path id="signature-path"
+						d="M10,30 Q20,10 40,30 Q60,50 80,20 Q100,0 120,30 Q140,40 160,10 Q180,0 200,30"
+						fill="none"
+						stroke="#0288d1"
+						stroke-width="2.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-dasharray="1000"
+						stroke-dashoffset="1000"
+					/>
+				</svg>
+				<span style="margin-left:0.5em;">
+					Made with <a href="https://www.linkedin.com/in/ziad-mohamed-873309217/" style="color:#0288d1;text-decoration:underline;">Ziad Alsaghier</a>.
+				</span>
+			</span>
+			<script>
+			(function() {
+				const path = document.getElementById('signature-path');
+				const totalLen = path.getTotalLength();
+				let progress = 0;
+				function animate() {
+					progress += 18;
+					if (progress > totalLen) progress = totalLen;
+					path.setAttribute('stroke-dashoffset', totalLen - progress);
+					if (progress < totalLen) {
+						requestAnimationFrame(animate);
+					}
+				}
+				setTimeout(animate, 400);
+			})();
+			</script>
 		</div>
 
 		<!-- Scripts -->

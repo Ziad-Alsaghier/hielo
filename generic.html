@@ -1,42 +1,215 @@
 <!DOCTYPE HTML>
-<!--
-	Hielo by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
---><html><head><title>Hielo by TEMPLATED</title><meta charset="utf-8"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="assets/css/main.css"></head><body class="subpage">
+<html>
+<head>
+	<title>Mariam's Creative Drawing Design</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<style>
+		/* Creative Drawing Canvas Styles */
+		.drawing-section {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+			padding: 60px 0;
+		}
+		.drawing-title {
+			font-family: 'Brush Script MT', cursive, sans-serif;
+			font-size: 3em;
+			color: #6d28d9;
+			margin-bottom: 20px;
+			letter-spacing: 2px;
+			animation: fadeInDown 1.2s cubic-bezier(.77,0,.18,1) both;
+		}
+		@keyframes fadeInDown {
+			from { opacity: 0; transform: translateY(-40px);}
+			to { opacity: 1; transform: translateY(0);}
+		}
+		.drawing-canvas-container {
+			position: relative;
+			width: 420px;
+			height: 420px;
+			background: #fff;
+			border-radius: 30px;
+			box-shadow: 0 8px 32px rgba(109,40,217,0.15);
+			overflow: hidden;
+			margin-bottom: 30px;
+			animation: popIn 1.2s cubic-bezier(.77,0,.18,1) 0.5s both;
+		}
+		@keyframes popIn {
+			0% { transform: scale(0.7); opacity: 0;}
+			100% { transform: scale(1); opacity: 1;}
+		}
+		/* Animated brush */
+		.brush {
+			position: absolute;
+			width: 60px;
+			height: 60px;
+			pointer-events: none;
+			z-index: 2;
+			animation: brushMove 4s infinite alternate cubic-bezier(.77,0,.18,1);
+		}
+		@keyframes brushMove {
+			0% { left: 30px; top: 60px; transform: rotate(-10deg);}
+			40% { left: 200px; top: 100px; transform: rotate(10deg);}
+			70% { left: 320px; top: 300px; transform: rotate(-15deg);}
+			100% { left: 100px; top: 350px; transform: rotate(5deg);}
+		}
+		/* Mariam signature animation */
+		.mariam-signature {
+			font-family: 'Pacifico', cursive, sans-serif;
+			font-size: 2em;
+			color: #a78bfa;
+			margin-top: 10px;
+			letter-spacing: 3px;
+			opacity: 0;
+			animation: signatureAppear 2s 2s forwards cubic-bezier(.77,0,.18,1);
+		}
+		@keyframes signatureAppear {
+			to { opacity: 1; }
+		}
+	</style>
+	<!-- Google Fonts for creative fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body class="subpage">
 
-		<!-- Header -->
-			<header id="header"><div class="logo"><a href="index.html">Hielo <span>by TEMPLATED</span></a></div>
-				<a href="#menu">Menu</a>
-			</header><!-- Nav --><nav id="menu"><ul class="links"><li><a href="index.html">Home</a></li>
-					<li><a href="generic.html">Generic</a></li>
-					<li><a href="elements.html">Elements</a></li>
-				</ul></nav><!-- One --><section id="One" class="wrapper style3"><div class="inner">
-					<header class="align-center"><p>Eleifend vitae urna</p>
-						<h2>Generic Page Template</h2>
-					</header></div>
-			</section><!-- Two --><section id="two" class="wrapper style2"><div class="inner">
-					<div class="box">
-						<div class="content">
-							<header class="align-center"><p>maecenas sapien feugiat ex purus</p>
-								<h2>Lorem ipsum dolor</h2>
-							</header><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras at dignissim augue, in iaculis neque. Etiam bibendum felis ac vulputate pellentesque. Cras non blandit quam. Nunc porta, est non posuere sagittis, neque nunc pellentesque diam, a iaculis lacus urna vitae purus. In non dui vel est tempor faucibus. Aliquam erat volutpat. Quisque vel est vitae nibh laoreet auctor. In nec libero dui. Nulla ullamcorper, dolor nec accumsan viverra, libero eros rutrum metus, vel lacinia magna odio non nunc. Praesent semper felis eu rhoncus aliquam. Donec at quam ac libero vestibulum pretium. Nunc faucibus vel arcu in malesuada. Aenean at velit odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas commodo erat eget molestie sollicitudin. Donec imperdiet, ex sed blandit dictum, ipsum metus ultrices arcu, vitae euismod nisl sapien vitae tortor.</p>
+	<!-- Header -->
+	<header id="header">
+		<div class="logo"><a href="index.html">Hielo <span>by Mariam</span></a></div>
+		<a href="#menu">Menu</a>
+	</header>
+	<!-- Nav -->
+	<nav id="menu">
+		<ul class="links">
+			<li><a href="index.html">Home</a></li>
+			<li><a href="generic.html">Generic</a></li>
+			<li><a href="elements.html">Elements</a></li>
+		</ul>
+	</nav>
 
-							<p>Vivamus nec odio ac ligula congue feugiat at vitae leo. Aenean sem justo, finibus sed dui eu, accumsan facilisis dolor. Fusce quis dui eget odio iaculis aliquam vel sed velit. Nulla pellentesque posuere semper. Nulla eu sagittis lorem, a auctor nulla. Sed ac condimentum orci, ac varius ante. Nunc blandit quam sit amet sollicitudin sodales.</p>
-
-							<p>Vivamus ultricies mollis mauris quis molestie. Quisque eu mi velit. In et cursus nibh. Donec facilisis, orci sed mollis hendrerit, nunc risus mattis odio, eget efficitur nisl orci a lectus. Aenean finibus neque convallis orci sollicitudin tincidunt. Vivamus lacinia facilisis diam, quis facilisis nisi luctus nec. Aliquam ac molestie enim, ut ultrices elit. Fusce laoreet vulputate risus in tincidunt. Sed commodo mollis maximus. Nullam varius laoreet nibh sit amet facilisis. Donec ac odio vehicula, consequat elit et, sodales justo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam ac auctor mauris, in hendrerit libero. </p>
-						</div>
-					</div>
-				</div>
-			</section><!-- Footer --><footer id="footer"><div class="container">
-					<ul class="icons"><li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
-					</ul></div>
-			</footer><div class="copyright">
-			Made with <a href="https://templated.co/">Templated</a>.
+	<!-- Creative Drawing Section for Mariam -->
+	<section class="drawing-section">
+		<div class="drawing-title">Creative Drawing for Mariam</div>
+		<div class="drawing-canvas-container">
+			<canvas id="mariamCanvas" width="420" height="420"></canvas>
+			<img src="images/brush.png" alt="Brush" class="brush" id="brushAnim" />
 		</div>
+		<div class="mariam-signature">Maryouma</div>
+	</section>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script><script src="assets/js/jquery.scrollex.min.js"></script><script src="assets/js/skel.min.js"></script><script src="assets/js/util.js"></script><script src="assets/js/main.js"></script></body></html>
+	<!-- Footer -->
+	<footer id="footer">
+		<div class="container">
+			<ul class="icons">
+				<li><a href="https://x.com/mariama16093248?s=11" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="https://www.facebook.com/share/1ENLFNiE34/?mibextid=wwXIfr" class="icon fa-facebook"><span
+							class="label">Facebook</span></a></li>
+				<li><a href="https://www.instagram.com/mari.amabdelrazek/profilecard/?igsh=cHE4dGozaTJicTB6"
+						class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a href="mariamabdelrazek226@gmail.com" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+			</ul>
+		</div>
+	</footer>
+	<div class="copyright">
+		<span id="signature-container" style="display:inline-block; vertical-align:middle;">
+			<svg id="signature-svg" width="220" height="40" viewBox="0 0 220 40" style="vertical-align:middle;">
+				<path id="signature-path" d="M10,30 Q20,10 40,30 Q60,50 80,20 Q100,0 120,30 Q140,40 160,10 Q180,0 200,30"
+					fill="none" stroke="#0288d1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+					stroke-dasharray="1000" stroke-dashoffset="1000" />
+			</svg>
+			<span style="margin-left:0.5em;">
+				Made with <a href="https://www.linkedin.com/in/ziad-mohamed-873309217/" style="color:#0288d1;text-decoration:underline;">Ziad
+					Alsaghier</a>.
+			</span>
+		</span>
+		<script>
+			(function () {
+				const path = document.getElementById('signature-path');
+				const totalLen = path.getTotalLength();
+				let progress = 0;
+				function animate() {
+					progress += 18;
+					if (progress > totalLen) progress = totalLen;
+					path.setAttribute('stroke-dashoffset', totalLen - progress);
+					if (progress < totalLen) {
+						requestAnimationFrame(animate);
+					}
+				}
+				setTimeout(animate, 400);
+			})();
+		</script>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script>
+		// Creative animated drawing on canvas for Mariam
+		const canvas = document.getElementById('mariamCanvas');
+		const ctx = canvas.getContext('2d');
+
+		// Draw a creative flower with animation
+		function drawPetal(cx, cy, radius, angle, color) {
+			ctx.save();
+			ctx.translate(cx, cy);
+			ctx.rotate(angle);
+			ctx.beginPath();
+			ctx.moveTo(0, 0);
+			ctx.bezierCurveTo(radius/2, -radius/2, radius, radius/2, 0, radius);
+			ctx.bezierCurveTo(-radius, radius/2, -radius/2, -radius/2, 0, 0);
+			ctx.closePath();
+			ctx.fillStyle = color;
+			ctx.globalAlpha = 0.85;
+			ctx.shadowColor = color;
+			ctx.shadowBlur = 10;
+			ctx.fill();
+			ctx.globalAlpha = 1;
+			ctx.restore();
+		}
+
+		function drawFlower(progress) {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			const petals = 8;
+			const centerX = 210, centerY = 210;
+			const radius = 120;
+			for (let i = 0; i < petals; i++) {
+				if (progress * petals < i) break;
+				let angle = (i * 2 * Math.PI) / petals;
+				drawPetal(centerX, centerY, radius, angle, `hsl(${280 + i*10}, 80%, 70%)`);
+			}
+			// Draw center
+			if (progress > 0.8) {
+				ctx.beginPath();
+				ctx.arc(centerX, centerY, 40, 0, 2 * Math.PI);
+				ctx.fillStyle = "#fbbf24";
+				ctx.shadowColor = "#fbbf24";
+				ctx.shadowBlur = 20;
+				ctx.fill();
+				ctx.shadowBlur = 0;
+			}
+		}
+
+		// Animate drawing
+		let start = null;
+		function animateFlower(ts) {
+			if (!start) start = ts;
+			let progress = Math.min((ts - start) / 1800, 1);
+			drawFlower(progress);
+			if (progress < 1) {
+				requestAnimationFrame(animateFlower);
+			}
+		}
+		requestAnimationFrame(animateFlower);
+
+		// Animate brush following the flower drawing
+		const brush = document.getElementById('brushAnim');
+		if (brush) {
+			// Optionally, you can animate the brush along the flower path using JS for more advanced effect
+		}
+	</script>
+</body>
+</html>

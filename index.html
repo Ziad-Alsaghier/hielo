@@ -852,14 +852,47 @@ body.dark-mode .icons a:hover {
 					};
 					</script>
 				</div>
-			</section><!-- Footer --><footer id="footer"><div class="container">
-					<ul class="icons"><li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
-					</ul></div>
-			</footer><div class="copyright">
-			Made with <a href="https://templated.co/">Ziad Alsagier</a>.
+			</section><!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<ul class="icons">
+						<li><a href="https://x.com/mariama16093248?s=11" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="https://www.facebook.com/share/1ENLFNiE34/?mibextid=wwXIfr" class="icon fa-facebook"><span
+									class="label">Facebook</span></a></li>
+						<li><a href="https://www.instagram.com/mari.amabdelrazek/profilecard/?igsh=cHE4dGozaTJicTB6"
+								class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="mariamabdelrazek226@gmail.com" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+					</ul>
+				</div>
+			</footer>
+			<div class="copyright">
+				<span id="signature-container" style="display:inline-block; vertical-align:middle;">
+					<svg id="signature-svg" width="220" height="40" viewBox="0 0 220 40" style="vertical-align:middle;">
+						<path id="signature-path" d="M10,30 Q20,10 40,30 Q60,50 80,20 Q100,0 120,30 Q140,40 160,10 Q180,0 200,30"
+							fill="none" stroke="#0288d1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+							stroke-dasharray="1000" stroke-dashoffset="1000" />
+					</svg>
+					<span style="margin-left:0.5em;">
+						Made with <a href="https://www.linkedin.com/in/ziad-mohamed-873309217/" style="color:#0288d1;text-decoration:underline;">Ziad
+							Alsaghier</a>.
+					</span>
+				</span>
+				<script>
+					(function () {
+						const path = document.getElementById('signature-path');
+						const totalLen = path.getTotalLength();
+						let progress = 0;
+						function animate() {
+							progress += 18;
+							if (progress > totalLen) progress = totalLen;
+							path.setAttribute('stroke-dashoffset', totalLen - progress);
+							if (progress < totalLen) {
+								requestAnimationFrame(animate);
+							}
+						}
+						setTimeout(animate, 400);
+					})();
+				</script>
 		</div>
 
 		<!-- Scripts -->
